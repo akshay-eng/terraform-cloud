@@ -41,4 +41,4 @@ jobs:
       - name: 'Terraform apply'
         id: apply
         run: |
-          terraform ${{ github.event.inputs.action }} -var rg_name=${{ github.event.inputs.ResourceGroupName }} -var rg_location=${{ github.event.inputs.Location }} -var vnetname=${{ github.event.inputs.VirtualNetworkName 
+          terraform ${{ github.event.inputs.action }} -var rg_name=${{ github.event.inputs.ResourceGroupName }} -var rg_location=${{ github.event.inputs.Location }} -var vnetname=${{ github.event.inputs.VirtualNetworkName }} 
