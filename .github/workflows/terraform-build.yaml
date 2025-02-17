@@ -4,7 +4,7 @@ on:
     paths:
       - '*.tf'
   workflow_dispatch:
-     inputs:
+    inputs:
       ResourceGroupName:
         description: "Resource Group Name"
         type: "string"
@@ -28,17 +28,21 @@ jobs:
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
     steps:
       - uses: actions/checkout@main
+      
+      - name: 'Setup Terraform'
+        uses: hashicorp/setup-terraform@v3
+        
       - name: 'Terraform init'
         id: init
         run: |
           terraform init          
-
+          
       - name: 'Terraform plan'
         id: plan
         run: |
           terraform plan -var rg_name=${{ github.event.inputs.ResourceGroupName }} -var rg_location=${{ github.event.inputs.Location }} -var vnetname=${{ github.event.inputs.VirtualNetworkName }}
-
+          
       - name: 'Terraform apply'
         id: apply
         run: |
-          terraform ${{ github.event.inputs.action }} -var rg_name=${{ github.event.inputs.ResourceGroupName }} -var rg_location=${{ github.event.inputs.Location }} -var vnetname=${{ github.event.inputs.VirtualNetworkName }} 
+          terraform ${{ github.event.inputs.action }} -var rg_name=${{ github.event.inputs.ResourceGroupName }} -var rg_location=${{ github.event.inputs.Location }} -var vnetname=${{ github.event.inputs.VirtualNetworkName }} -auto-approve
